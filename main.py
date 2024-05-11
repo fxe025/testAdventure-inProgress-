@@ -1,3 +1,4 @@
+#this is a new command test git
 import pygame
 from sys import exit
 import random
