@@ -6,18 +6,17 @@ from statClass import player_health, player_mana, player_status
 import char_stats
 import enemies 
 
+from allSprites import all_sprites
+
 click_cooldown = 0.5
 last_click_time = 0
 current_click_time = 0
 
-class battle_sprite(pygame.sprite.Sprite):
-    def __init__(self, name, location, player_status):
-        super().__init__()
-        test_surf = pygame.Surface((100,30))
+class battle_sprite(all_sprites):
+    def __init__(self, name, coordinates, player_status, test_surf):
+        super().__init__(coordinates, test_surf)
         self.type = name
-        self.image = test_surf
         self.image.fill("Brown")
-        self.rect = self.image.get_rect(topleft = location)
 
         #variables to update
         self.player_status = player_status

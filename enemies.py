@@ -1,13 +1,12 @@
 import pygame
 import random
 
-class square_sprite(pygame.sprite.Sprite):
-    def __init__(self, colour):
-        super().__init__()
-        test_surf = pygame.Surface((150,150))
-        self.image = test_surf
+from allSprites import all_sprites
+
+class square_sprite(all_sprites):
+    def __init__(self, colour, coordinates, test_surf):
+        super().__init__(coordinates, test_surf)
         self.image.fill(colour)
-        self.rect = self.image.get_rect(topleft = (450,200))
         self.name = "Square"
         self.health = 20
         self.atk = 10
@@ -27,6 +26,6 @@ def enemy_to_appear(enemy_list):
     colour_list = ["Red", "Blue", "Black", "Purple"]
     enemy_chosen = random.choice(enemy_list)
     enemy_colour = random.choice(colour_list)
-    output_enemy = globals()[enemy_chosen](enemy_colour)
+    output_enemy = globals()[enemy_chosen](enemy_colour,(450,200),pygame.Surface((150,150)))
     return output_enemy
 
