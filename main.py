@@ -45,11 +45,11 @@ battle_display = [("attack", (200,500)), ("defend", (700,500)), ("magic", (200,5
 
 for (home_action, home_colour, home_location), (battle_action, battle_location) in \
     zip(home_display, battle_display):
-    interactions.add(interaction_sprite(home_action, home_colour, home_location, player_status))
+    interactions.add(interaction_sprite(name=home_action, colour=home_colour, coordinates=home_location, player_status=player_status, test_surf=pygame.Surface((100,30))))
     battle_sprites.add(battle_sprite(battle_action, battle_location, player_status))
 
 
-inventory_sprite = openInventory_sprite()
+inventory_sprite = openInventory_sprite((800,50), pygame.Surface((100,30)))
 
 menu_surface = pygame.Surface((600,450))
 menu_surface.fill("Purple")

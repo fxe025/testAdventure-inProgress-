@@ -7,6 +7,8 @@ import time
 import itemList
 from statClass import player_mana
 
+from allSprites import all_sprites
+
 click_cooldown = 0.5
 last_click_time = 0
 current_click_time = 0
@@ -30,27 +32,22 @@ class inventory:
         print(self.inventory_list)
         print("Number of items: {}".format(self.size))
 
-class slot_sprite(pygame.sprite.Sprite):
-    def __init__(self, coordinates, text):
-        super().__init__()
-        self.location = coordinates
-        test_surf = pygame.Surface((250,30))
-        self.image = test_surf
+class slot_sprite(all_sprites):
+    def __init__(self, coordinates, text, test_surf):
+        super().__init__(coordinates, test_surf)
+        #test_surf = pygame.Surface((250,30))
+        #self.image = test_surf
         self.image.fill('Pink')
-        self.rect = self.image.get_rect(topleft = self.location)
         self.item_name = text
 
     def player_input(self):
-        global current_click_time
-        global last_click_time
         if_use_item = (False, "") #store whether item is used and item's name
-        click_cooldown = 0.5
         mouse = pygame.mouse.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
         if mouse[0]:
-            current_click_time = time.time()
+            super().update_current_click_time()
             if self.rect.collidepoint(mouse_pos) and current_click_time - last_click_time >= click_cooldown:
-                last_click_time = current_click_time
+                super().update_last_click_time()
                 if_use_item = (True, self.item_name)
                 print('clicked. use item!')
                 print(if_use_item)
@@ -66,13 +63,9 @@ class slot_sprite(pygame.sprite.Sprite):
         text_rect = text_surface.get_rect(topleft = self.location)
         screen.blit(text_surface, text_rect)
 
-class menu_button_sprite(pygame.sprite.Sprite):
-    def __init__(self, coordinates, width, height):
-        super().__init__()
-        self.location = coordinates
-        test_surf = pygame.Surface((width,height), pygame.SRCALPHA)
-        self.image = test_surf
-        self.rect = self.image.get_rect(topleft = self.location)
+class menu_button_sprite(all_sprites):
+    def __init__(self, coordinates, test_surf):
+        super().__init__(coordinates, test_surf)
     
     def fill_colour(self):
         self.image.fill('Red')
@@ -97,9 +90,9 @@ class menu_button_sprite(pygame.sprite.Sprite):
         screen.blit(self.image,self.rect)
         return self.player_input()
 
-previous_page = menu_button_sprite((300,460),30,30)
-next_page = menu_button_sprite((650,460),30,30)
-close_menu = menu_button_sprite((760,50),40,40)
+previous_page = menu_button_sprite((300,460),pygame.Surface((30,30), pygame.SRCALPHA))
+next_page = menu_button_sprite((650,460),pygame.Surface((30,30), pygame.SRCALPHA))
+close_menu = menu_button_sprite((760,50),pygame.Surface((40,40), pygame.SRCALPHA))
 
 def add_inventory(item_list, sprites_1, sprites_2):
     (x,y) = (240,100) #topleft/first item location
@@ -114,9 +107,9 @@ def add_inventory(item_list, sprites_1, sprites_2):
         else:
             x = 510
         if i < 10:
-            sprites_1.add(slot_sprite((x,y), item_list[i]))
+            sprites_1.add(slot_sprite((x,y), item_list[i], pygame.Surface((250,30))))
         else:
-            sprites_2.add(slot_sprite((x,y), item_list[i]))
+            sprites_2.add(slot_sprite((x,y), item_list[i], pygame.Surface((250,30))))
 
 def sort_inventory(item_list):
     size = len(item_list)
@@ -152,14 +145,11 @@ menu_sprites_1 = pygame.sprite.Group()
 menu_sprites_2 = pygame.sprite.Group()
 
 # 4 sprites to interact at home page     
-class interaction_sprite(pygame.sprite.Sprite):
-    def __init__(self, name, colour, location, player_status):
-        super().__init__()
-        test_surf = pygame.Surface((100,30))
+class interaction_sprite(all_sprites):
+    def __init__(self, name, colour, coordinates, player_status, test_surf):
+        super().__init__(coordinates, test_surf)
         self.type = name
-        self.image = test_surf
         self.image.fill(colour)
-        self.rect = self.image.get_rect(topleft = location)
 
         #variables to update
         self.player_status = player_status
@@ -245,13 +235,10 @@ class interaction_sprite(pygame.sprite.Sprite):
         return self.player_status
 
 #inventory sprite
-class openInventory_sprite(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        test_surf = pygame.Surface((100,30))
-        self.image = test_surf
+class openInventory_sprite(all_sprites):
+    def __init__(self, coordinates, test_surf):
+        super().__init__(coordinates, test_surf)
         self.image.fill('Brown')
-        self.rect = self.image.get_rect(topleft = (800,50))
 
     def player_input(self):
         global current_click_time
