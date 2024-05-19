@@ -68,7 +68,7 @@ class mana:
             self.mana = self.min_mana
 
     def recover_mana(self, amount):
-        self.energy += amount
+        self.mana += amount
         if self.mana > self.max_mana:
             self.mana = self.max_mana
 
