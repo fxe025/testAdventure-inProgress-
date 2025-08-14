@@ -1,4 +1,4 @@
-# [Project Name] — testAdventure-inProgress-
+# — testAdventure-inProgress-
 
 ## Overview
 A work-in-progress turn-based RPG made with Pygame.  
@@ -18,7 +18,7 @@ This project is a personal exploration of combat design, balancing, and gameplay
 - Additional enemy types with varied strategies
 - Visual effects
 
-## Screenshots / GIFs
+## Screenshots
 Main UI:
 <img width="984" height="582" alt="image" src="https://github.com/user-attachments/assets/96ed60ea-03b1-49ff-93ea-009950b48c88" />
 
@@ -28,6 +28,6 @@ Battle scene:
 Item selection:
 <img width="962" height="582" alt="Screenshot 2025-08-14 213816" src="https://github.com/user-attachments/assets/712004c5-604a-4188-afbc-8cba7ffa44f2" />
 
-## echnologies Used
+## Technologies Used
 - **Languages:** Python
 - **Tools:** Git
